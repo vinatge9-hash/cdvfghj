@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Niyantri Cafe - Home</title>
+  <meta name="description" content="Niyantri Cafe: A cozy coffee shop experience with a warm coffee-color theme." />
+  <!-- Fonts (Step 1 of Advanced Font Usage) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind (Utility-First CSS) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Swiper (Image Carousel) -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <!-- PayPal SDK (not used on Home, but ready if needed) -->
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=INR" data-sdk-integration-source="button-factory"></script>
+  <style>
+    /* Step 2 of Advanced Font Usage: apply fonts via inline style later on sections */
+  </style>
+</head>
+<body class="bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 text-gray-900 min-h-screen">
+  <!-- Header (identical across pages) -->
+  <header class="bg-amber-800/95 text-white sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center space-x-2">
+          <!-- Inline SVG Coffee Icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Coffee cup icon">
+            <path d="M3 8h13a4 4 0 0 1 0 8H7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 4h6a4 4 0 0 1 4 4v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M3 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="font-semibold text-lg">Niyantri Cafe</span>
+        </a>
+        <nav aria-label="Main" class="hidden md:flex space-x-6 font-medium">
+          <a href="index.html" class="hover:text-yellow-300 active:text-yellow-200">Home</a>
+          <a href="menu.html" class="hover:text-yellow-300">Menu</a>
+          <a href="cart.html" class="hover:text-yellow-300">Cart (<span id="cart-count">0</span>)</a>
+          <a href="about.html" class="hover:text-yellow-300">About</a>
+          <a href="contact.html" class="hover:text-yellow-300">Contact</a>
+        </nav>
+        <!-- Mobile menu button (hamburger) -->
+        <button id="mobile-menu" class="md:hidden text-white focus:outline-none" aria-label="Open menu">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile menu panel -->
+    <div id="mobile-menu-panel" class="hidden md:hidden bg-amber-700/90">
+      <a href="index.html" class="block px-4 py-2">Home</a>
+      <a href="menu.html" class="block px-4 py-2">Menu</a>
+      <a href="cart.html" class="block px-4 py-2">Cart</a>
+      <a href="about.html" class="block px-4 py-2">About</a>
+      <a href="contact.html" class="block px-4 py-2">Contact</a>
+    </div>
+  </header>
+
+  <!-- Hero with Swiper Carousel (Step: Image carousel) -->
+  <main class="pt-8">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+      <div class="swiper-container rounded-xl overflow-hidden shadow-xl">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide relative">
+            <img src="https://images.pexels.com/photos/16921455/pexels-photo-16921455.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Cozy coffee corner" class="w-full h-96 object-cover"/>
+            <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent text-white" style="font-family: 'Playfair Display', serif;">
+              <h2 class="text-3xl md:text-4xl font-bold">Welcome to Niyantri Cafe</h2>
+              <p class="mt-2 max-w-2xl">Brewing moments of joy with carefully crafted espresso, pour-overs, and rich, comforting flavors.</p>
+            </div>
+          </div>
+          <div class="swiper-slide relative">
+            <img src="https://images.pexels.com/photos/6732243/pexels-photo-6732243.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Barista crafting latte art" class="w-full h-96 object-cover"/>
+            <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent text-white" style="font-family: 'Playfair Display', serif;">
+              <h2 class="text-3xl md:text-4xl font-bold">Sourced & Handcrafted</h2>
+              <p class="mt-2 max-w-2xl">From ethically sourced beans to meticulous roasting profiles, every cup is a story.</p>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <!-- Quick Highlights (Glassmorphic cards) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-6 mb-16" aria-label="Highlights">
+      <article class="p-6 bg-white/60 backdrop-filter backdrop-blur-sm rounded-xl shadow-lg border border-white/40" style="border-radius: 16px;">
+        <div class="flex items-center space-x-3 mb-3 text-amber-900">
+          <!-- Icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="coffee"><path d="M3 6h12a4 4 0 0 1 4 4v4" /><path d="M3 6h6a4 4 0 0 1 4 4v8"/></svg>
+          <span class="font-semibold">Freshly Brewed</span>
+        </div>
+        <p>Small-batch roasts with deep, comforting flavors.</p>
+      </article>
+      <article class="p-6 bg-white/60 backdrop-filter backdrop-blur-sm rounded-xl shadow-lg border border-white/40" style="border-radius: 16px;">
+        <div class="flex items-center space-x-3 mb-3 text-amber-900"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="sparkles"><path d="M12 3l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4z"/></svg><span class="font-semibold">Cozy Atmosphere</span></div>
+        <p>Comfortable space to work, meet friends, or unwind.</p>
+      </article>
+      <article class="p-6 bg-white/60 backdrop-filter backdrop-blur-sm rounded-xl shadow-lg border border-white/40" style="border-radius: 16px;">
+        <div class="flex items-center space-x-3 mb-3 text-amber-900"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="award"><path d="M12 3l3 6 7 1-5 4 2 7-7-4-7 4 2-7-5-4 7-1 3-6z"/></svg><span class="font-semibold">Awards & Beans</span></div>
+        <p>Premium blends curated with care and passion.</p>
+      </article>
+    </section>
+
+    <!-- Testimonials (Quotes) -->
+    <section class="bg-amber-50 py-12" aria-label="Testimonials">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 class="text-2xl font-semibold" style="font-family: 'Playfair Display', serif;">What our guests say</h3>
+        <div class="mt-6 grid md:grid-cols-3 gap-6">
+          <blockquote class="p-6 bg-white/70 rounded-xl shadow-md border">
+            <p>“The ambiance is perfect for lazy Sundays. The mochas are divine.”</p>
+            <footer class="mt-2 text-sm">- Priya</footer>
+          </blockquote>
+          <blockquote class="p-6 bg-white/70 rounded-xl shadow-md border">
+            <p>“Best latte art in town. Friendly staff and great vibes.”</p>
+            <footer class="mt-2 text-sm">- Arjun</footer>
+          </blockquote>
+          <blockquote class="p-6 bg-white/70 rounded-xl shadow-md border">
+            <p>“The cookies pair wonderfully with their cold brew.”</p>
+            <footer class="mt-2 text-sm">- Sneha</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer (identical across pages) -->
+  <footer class="bg-amber-900 text-white mt-12 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+      <p class="text-sm">&copy; 2025 Niyantri Cafe</p>
+      <p class="text-xs">Designed with care in Telangana, Hyderabad, India</p>
+    </div>
+  </footer>
+
+  <!-- Global Script: Cart logic (One shared script on all pages) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Mobile menu toggle
+      const btn = document.getElementById('mobile-menu');
+      const panel = document.getElementById('mobile-menu-panel');
+      if (btn && panel) {
+        btn.addEventListener('click', () => panel.classList.toggle('hidden'));
+      }
+      updateCartCount();
+      // On cart page, render cart. This page is home, so this will be no-op.
+      if (document.getElementById('cart-items-container')) {
+        renderCartPage();
+      }
+      // Initialize Swiper (for hero carousel)
+      if (typeof Swiper !== 'undefined') {
+        new Swiper('.swiper-container', {
+          loop: true,
+          pagination: { el: '.swiper-pagination', clickable: true },
+          autoplay: { delay: 3500, disableOnInteraction: false },
+        });
+      }
+    });
+
+    function getCart() {
+      return JSON.parse(localStorage.getItem('shoppingCart')) || [];
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem('shoppingCart', JSON.stringify(cart));
+      updateCartCount();
+    }
+
+    function addToCart(itemId, itemName, itemPrice) {
+      const cart = getCart();
+      const existingItem = cart.find(i => i.id === itemId);
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        cart.push({ id: itemId, name: itemName, price: itemPrice, quantity: 1 });
+      }
+      saveCart(cart);
+      // Simple confirmation
+      const msg = itemName + ' has been added to your cart.';
+      if (typeof Swal !== 'undefined') {
+        Swal.fire({ title: 'Added', text: msg, icon: 'success', timer: 1200, showConfirmButton: false });
+      } else {
+        alert(msg);
+      }
+    }
+
+    function removeFromCart(itemId) {
+      let cart = getCart();
+      cart = cart.filter(item => item.id !== itemId);
+      saveCart(cart);
+      // Refresh cart view if on cart page
+      if (document.getElementById('cart-items-container')) {
+        renderCartPage();
+      }
+    }
+
+    function updateCartCount() {
+      const cart = getCart();
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const el = document.getElementById('cart-count');
+      if (el) el.textContent = totalItems;
+    }
+
+    function renderCartPage() {
+      const cart = getCart();
+      const container = document.getElementById('cart-items-container');
+      const totalElement = document.getElementById('cart-total');
+      if (!container || !totalElement) return;
+
+      container.innerHTML = '';
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-center w-full py-6">Your cart is empty.</p>';
+        totalElement.textContent = '₹0.00';
+        return;
+      }
+      let total = 0;
+      cart.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'flex justify-between items-center border-b py-2';
+        row.innerHTML = `
+          <span>${item.name} (x${item.quantity})</span>
+          <div class="flex items-center space-x-4">
+            <span>₹${(item.price * item.quantity).toFixed(2)}</span>
+            <button onclick="removeFromCart('${item.id}')" class="text-red-600 hover:text-red-800">Remove</button>
+          </div>
+        `;
+        container.appendChild(row);
+        total += item.price * item.quantity;
+      });
+      totalElement.textContent = '₹' + total.toFixed(2);
+    }
+
+    function proceedToCheckout() {
+      const cart = getCart();
+      if (cart.length > 0) {
+        // Instead of navigating to a separate checkout page (not included in 5 pages), scroll to PayPal area if present
+        const paypalSection = document.getElementById('paypal-section');
+        if (paypalSection) {
+          paypalSection.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          // Fallback: alert
+          alert('Proceeding to checkout...');
+        }
+      } else {
+        alert('Your cart is empty.');
+      }
+    }
+  </script>
+</body>
+</html>
