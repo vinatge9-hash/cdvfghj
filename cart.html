@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Niyantri Cafe - Cart</title>
+  <meta name="description" content="Your shopping cart at Niyantri Cafe." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</head>
+<body class="bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 text-gray-900 min-h-screen">
+  <!-- Header identical across pages -->
+  <header class="bg-amber-800/95 text-white sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center space-x-2">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Coffee cup icon">
+            <path d="M3 8h13a4 4 0 0 1 0 8H7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M3 8h6a4 4 0 0 1 4 4v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M3 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="font-semibold text-lg">Niyantri Cafe</span>
+        </a>
+        <nav aria-label="Main" class="hidden md:flex space-x-6 font-medium">
+          <a href="index.html" class="hover:text-yellow-300">Home</a>
+          <a href="menu.html" class="hover:text-yellow-300">Menu</a>
+          <a href="cart.html" class="hover:text-yellow-300 active:text-yellow-200">Cart (<span id="cart-count">0</span>)</a>
+          <a href="about.html" class="hover:text-yellow-300">About</a>
+          <a href="contact.html" class="hover:text-yellow-300">Contact</a>
+        </nav>
+        <button id="mobile-menu" class="md:hidden text-white" aria-label="Open menu">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu-panel" class="hidden md:hidden bg-amber-700/90">
+      <a href="index.html" class="block px-4 py-2">Home</a>
+      <a href="menu.html" class="block px-4 py-2">Menu</a>
+      <a href="cart.html" class="block px-4 py-2">Cart</a>
+      <a href="about.html" class="block px-4 py-2">About</a>
+      <a href="contact.html" class="block px-4 py-2">Contact</a>
+    </div>
+  </header>
+
+  <main class="pt-6">
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold" style="font-family: 'Playfair Display', serif;">Your Cart</h1>
+        <p class="text-gray-700 mt-2">Review items and proceed to checkout with PayPal below.</p>
+        <div id="cart-items-container" class="mt-6 space-y-3"></div>
+        <div class="mt-4 border-t pt-4 flex justify-between items-center">
+          <strong>Total:</strong>
+          <span id="cart-total" class="text-xl font-semibold">₹0.00</span>
+        </div>
+        <div class="mt-4 flex space-x-4">
+          <button onclick="proceedToCheckout()" class="bg-amber-700 hover:bg-amber-800 text-white px-4 py-2 rounded">Proceed to PayPal</button>
+          <button onclick="location.href='menu.html'" class="bg-white/70 hover:bg-white px-4 py-2 rounded">Continue Shopping</button>
+        </div>
+      </div>
+      <aside class="p-4 bg-white/60 backdrop-filter backdrop-blur-sm rounded-xl shadow-md" style="min-height: 180px; font-family: Inter, sans-serif;">
+        <h3 class="font-semibold mb-2">Payment Summary</h3>
+        <p class="text-sm text-gray-700">Your items will be charged in INR. This is a sandbox PayPal integration.</p>
+        <div id="paypal-section" class="mt-4">
+          <div id="paypal-button-container"></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="bg-amber-900 text-white mt-12 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+      <p class="text-sm">&copy; 2025 Niyantri Cafe</p>
+      <p class="text-xs"> Telangana, Hyderabad, India</p>
+    </div>
+  </footer>
+
+  <script>
+    // Cart logic (shared)
+    function getCart(){ return JSON.parse(localStorage.getItem('shoppingCart')) || []; }
+    function saveCart(c){ localStorage.setItem('shoppingCart', JSON.stringify(c)); updateCartCount(); }
+    function addToCart(id,name,price){ const cart=getCart(); const ex=cart.find(i=>i.id===id); if(ex){ex.quantity++;} else {cart.push({id, name, price: parseInt(price.replace('₹','')), quantity:1});} saveCart(cart); alert(name+' added to cart.'); }
+    function removeFromCart(id){ let cart=getCart(); cart=cart.filter(i=>i.id!==id); saveCart(cart); renderCartPage(); }
+    function updateCartCount(){ const cart=getCart(); const total=cart.reduce((s,i)=>s+i.quantity,0); const el=document.getElementById('cart-count'); if(el) el.textContent= total; }
+    function renderCartPage(){ const cart=getCart(); const container=document.getElementById('cart-items-container'); if(!container) return; container.innerHTML=''; if(cart.length===0){ container.innerHTML='<p class="text-center w-full py-6">Your cart is empty.</p>'; document.getElementById('cart-total').textContent='₹0.00'; return; } let total=0; cart.forEach(item=>{ const row=document.createElement('div'); row.className='flex justify-between items-center border-b py-2'; row.innerHTML = `
+            <span>${item.name} (x${item.quantity})</span>
+            <div class="flex items-center space-x-4">
+              <span>₹${(item.price * item.quantity).toFixed(2)}</span>
+              <button onclick="removeFromCart('${item.id}')" class="text-red-600 hover:text-red-800">Remove</button>
+            </div>`; container.appendChild(row); total += item.price * item.quantity; }); document.getElementById('cart-total').textContent = '₹' + total.toFixed(2); }
+    function proceedToCheckout(){ const cart=getCart(); if(cart.length>0){ const paySec=document.getElementById('paypal-section'); if(paySec){ paySec.scrollIntoView({behavior:'smooth'}); } else { alert('Proceeding to checkout...'); } } else { alert('Your cart is empty.'); } }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCartCount();
+      if (document.getElementById('cart-items-container')) renderCartPage();
+      // Initialize PayPal button if container exists
+      if (document.getElementById('paypal-button-container') && typeof paypal !== 'undefined') {
+        const cart = getCart(); let amount = cart.reduce((s,i)=>s + i.price * i.quantity, 0);
+        paypal.Buttons({
+          style: { layout: 'vertical', color: 'gold', shape: 'pill' },
+          createOrder: function(data, actions){ return actions.order.create({ purchase_units: [{ amount: { currency_code: 'INR', value: amount.toFixed(2) } }] }); },
+          onApprove: function(data, actions){ return actions.order.capture().then(function(details){ localStorage.removeItem('shoppingCart'); updateCartCount(); if(document.getElementById('cart-items-container')) document.getElementById('cart-items-container').innerHTML = '<p class="text-center w-full py-6">Payment successful. Thank you!</p>'; }); }
+        }).render('#paypal-button-container');
+      }
+    });
+  </script>
+</body>
+</html>
